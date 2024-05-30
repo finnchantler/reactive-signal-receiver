@@ -12,12 +12,6 @@ public class SignalReceiver {
     public static void main(String[] args) {
         SignalReceiver receiver = new SignalReceiver();
         receiver.start();
-        // Delay keeps the main thread alive
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void start() {
@@ -26,16 +20,17 @@ public class SignalReceiver {
         messageFlux
                 .subscribeOn(Schedulers.boundedElastic())
                 .flatMap(this::parseMessage)
-                .subscribe(
-                        this::processMessage,
-                        error -> System.err.println("Error: " + error),
-                        () -> System.out.println("Stream finished")
-                );
+                .doOnNext(this::processMessage)
+                .doOnError(error -> System.err.println("Error: " + error))
+                .doOnComplete(() -> System.out.println("Stream finished"))
+                .blockLast();
     }
 
     public Flux<String> readSignalOutput() {
         return Flux.create(emitter -> {
+
             ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", "reactive-signal-testing.jar");
+
             try {
                 Process process = processBuilder.start();
 
@@ -50,6 +45,7 @@ public class SignalReceiver {
                     System.err.println("Error reading process output: " + e.getMessage()); // Debugging line
                     emitter.error(e); // Emit error if reading fails
                 }
+
             } catch (IOException e) {
                 System.err.println("Error starting process: " + e.getMessage()); // Debugging line
                 emitter.error(e); // Emit error if process start fails
