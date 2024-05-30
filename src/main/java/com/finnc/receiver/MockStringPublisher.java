@@ -17,12 +17,4 @@ public class MockStringPublisher {
     public Flux<String> getStringFlux() {
         return stringFlux;
     }
-
-    public static void main(String[] args) {
-        List<String> strings = List.of("String 1", "String 2", "String 3", "String 4", "String 5");
-
-        MockStringPublisher stringPublisher = new MockStringPublisher(strings);
-        stringPublisher.getStringFlux()
-                .subscribe(System.out::println);
-    }
 }
