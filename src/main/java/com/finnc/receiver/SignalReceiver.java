@@ -3,6 +3,7 @@ package com.finnc.receiver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
@@ -15,7 +16,8 @@ public class SignalReceiver {
     }
 
     public void start() {
-        Flux<String> messageFlux = readSignalOutput();
+        //Flux<String> messageFlux = readSignalOutput();
+        Flux<String> messageFlux = readMockStringPublisher(); // for testing
 
         messageFlux
                 .subscribeOn(Schedulers.boundedElastic())
@@ -24,6 +26,11 @@ public class SignalReceiver {
                 .doOnError(error -> System.err.println("Error: " + error))
                 .doOnComplete(() -> System.out.println("Stream finished"))
                 .blockLast();
+    }
+
+    public Flux<String> readMockStringPublisher() {
+        return new MockStringPublisher(List.of("Message 1", "Message 2", "Message 3"))
+                .getStringFlux();
     }
 
     public Flux<String> readSignalOutput() {
