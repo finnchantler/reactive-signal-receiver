@@ -3,6 +3,7 @@ package com.finnc.receiver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 import reactor.core.publisher.Flux;
@@ -29,7 +30,7 @@ public class SignalReceiver {
     }
 
     public Flux<String> readMockStringPublisher() {
-        return new MockStringPublisher(List.of("Message 1", "Message 2", "Message 3"))
+        return new MockStringPublisher(List.of("menu", "order pizza, cake, McPlant to what.three.words", "status", "Hello?"))
                 .getStringFlux();
     }
 
@@ -62,6 +63,25 @@ public class SignalReceiver {
 
     private Flux<String> parseMessage(String message) {
         System.out.println("parser received: " + message);
+        String[] split = message.split(" ");
+
+        if (split[0].equals("menu")) {
+            // Get menu from API
+        } else if (split[0].equals("order")) {
+
+            String[] parts = message.split(" to ");
+            if (parts.length != 2) {
+                // Invalid format, send a message back to the user
+            }
+            String[] orderItems = parts[0].substring(6).split(", ");
+            String order = "ORDER-" + Arrays.toString(orderItems) + "-" + parts[1];
+            return Flux.just(order);
+
+        } else if (split[0].equals("status")) {
+            // Calls API for shop status (online, offline, back in 5 etc)
+        } else {
+            // Handles non-command messaging, forwarding them to admin for reply
+        }
         return Flux.just(message);
     }
 
