@@ -74,7 +74,7 @@ public class SignalReceiver {
                 // Invalid format, send a message back to the user
             }
             String[] orderItems = parts[0].substring(6).split(", ");
-            String order = "ORDER-" + Arrays.toString(orderItems) + "-" + parts[1];
+            String order = "ORDER: " + Arrays.toString(orderItems) + " deliver to: " + parts[1];
             return Flux.just(order);
 
         } else if (split[0].equals("status")) {
