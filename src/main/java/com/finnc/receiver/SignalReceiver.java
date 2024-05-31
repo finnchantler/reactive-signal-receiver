@@ -6,23 +6,35 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
+@Service
 public class SignalReceiver {
 
+    private final WebClient webClient;
+
+    public SignalReceiver(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
+    }
+
+    /*
     public static void main(String[] args) {
         SignalReceiver receiver = new SignalReceiver();
         receiver.start();
     }
+    */
 
+    @PostConstruct
     public void start() {
         //Flux<String> messageFlux = readSignalOutput();
         Flux<String> messageFlux = readMockStringPublisher(); // for testing
 
         messageFlux
                 .subscribeOn(Schedulers.boundedElastic())
-                .flatMap(this::parseMessage)
                 .doOnNext(this::processMessage)
                 .doOnError(error -> System.err.println("Error: " + error))
                 .doOnComplete(() -> System.out.println("Stream finished"))
@@ -61,7 +73,7 @@ public class SignalReceiver {
         });
     }
 
-    private Flux<String> parseMessage(String message) {
+    private void processMessage(String message) {
         System.out.println("parser received: " + message);
         String[] split = message.split(" ");
 
@@ -74,18 +86,22 @@ public class SignalReceiver {
                 // Invalid format, send a message back to the user
             }
             String[] orderItems = parts[0].substring(6).split(", ");
-            String order = "ORDER: " + Arrays.toString(orderItems) + " deliver to: " + parts[1];
-            return Flux.just(order);
+            String orderString = "ORDER: " + Arrays.toString(orderItems) + " deliver to: " + parts[1];
+
+
 
         } else if (split[0].equals("status")) {
             // Calls API for shop status (online, offline, back in 5 etc)
         } else {
             // Handles non-command messaging, forwarding them to admin for reply
         }
-        return Flux.just(message);
     }
 
-    private void processMessage(String message) {
-        System.out.println("processor received: " + message);
+    private void postToOrderAPI(String orderString) {
+        webClient.post()
+                .uri("/store")
+                .bodyValue(orderString)
+                .retrieve()
+                .bodyToFlux(String.class);
     }
 }
