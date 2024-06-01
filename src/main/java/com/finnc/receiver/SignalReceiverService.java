@@ -13,20 +13,22 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 @Service
-public class SignalReceiver {
+public class SignalReceiverService {
 
     private final WebClient webClient;
 
-    public SignalReceiver(WebClient.Builder webClientBuilder) {
+    public SignalReceiverService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
+        System.out.println("signal-receiver-service started");
     }
 
-    /*
-    public static void main(String[] args) {
-        SignalReceiver receiver = new SignalReceiver();
-        receiver.start();
-    }
-    */
+
+//    public static void main(String[] args) {
+//        SignalReceiverService receiver = new SignalReceiverService();
+//        receiver.start();
+//    }
+//
+
 
     @PostConstruct
     public void start() {
@@ -87,7 +89,7 @@ public class SignalReceiver {
             }
             String[] orderItems = parts[0].substring(6).split(", ");
             String orderString = "ORDER: " + Arrays.toString(orderItems) + " deliver to: " + parts[1];
-
+            System.out.println(orderString);
 
 
         } else if (split[0].equals("status")) {

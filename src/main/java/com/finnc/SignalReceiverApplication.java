@@ -1,4 +1,4 @@
-package com.finnc.api;
+package com.finnc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

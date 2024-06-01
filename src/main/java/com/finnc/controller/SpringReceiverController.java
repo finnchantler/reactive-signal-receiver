@@ -1,4 +1,4 @@
-package com.finnc.api.controller;
+package com.finnc.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
