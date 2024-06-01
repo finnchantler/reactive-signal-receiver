@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -20,6 +21,7 @@ public class SignalReceiverService {
     }
 
     @PostConstruct
+    @Async
     public void start() {
         //Flux<String> messageFlux = readSignalOutput();
         Flux<String> messageFlux = readMockStringPublisher(); // for testing
