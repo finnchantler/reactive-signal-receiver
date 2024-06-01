@@ -15,20 +15,9 @@ import reactor.core.scheduler.Schedulers;
 @Service
 public class SignalReceiverService {
 
-    private final WebClient webClient;
-
-    public SignalReceiverService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
+    public SignalReceiverService() {
         System.out.println("signal-receiver-service started");
     }
-
-
-//    public static void main(String[] args) {
-//        SignalReceiverService receiver = new SignalReceiverService();
-//        receiver.start();
-//    }
-//
-
 
     @PostConstruct
     public void start() {
@@ -97,13 +86,5 @@ public class SignalReceiverService {
         } else {
             // Handles non-command messaging, forwarding them to admin for reply
         }
-    }
-
-    private void postToOrderAPI(String orderString) {
-        webClient.post()
-                .uri("/store")
-                .bodyValue(orderString)
-                .retrieve()
-                .bodyToFlux(String.class);
     }
 }
