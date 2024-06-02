@@ -12,7 +12,7 @@
 
     <groupId>com.finnc</groupId>
     <artifactId>signal-receiver-application</artifactId>
-    <version>0.0.1</version>
+    <version>0.2.0</version>
     <name>signal-receiver-application</name>
     <description>a reactive REST API for Signal messaging</description>
 
@@ -24,6 +24,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- WHY WONT THIS WORK -->
+            <version>3.3.0</version>
         </dependency>
 
         <dependency>
