@@ -1,4 +1,4 @@
-package com.finnc.model;
+package com.finnc.models;
 
 public record Customer (String name) {
 }
