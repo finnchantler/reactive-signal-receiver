@@ -1,4 +1,4 @@
 package com.finnc.model;
 
-public class MenuItem {
+public record MenuItem(String name, String description, int price, int stock) {
 }

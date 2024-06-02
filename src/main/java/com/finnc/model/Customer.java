@@ -1,4 +1,4 @@
 package com.finnc.model;
 
-public class Customer {
+public record Customer (String name) {
 }

@@ -1,4 +1,4 @@
 package com.finnc.model;
 
-public class Order {
+public record Order(Customer customer, MenuItem[] items, String deliverTo) {
 }
