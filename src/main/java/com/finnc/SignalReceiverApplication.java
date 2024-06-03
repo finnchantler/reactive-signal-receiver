@@ -1,6 +1,6 @@
 package com.finnc;
 
-import com.finnc.services.SignalReceiverService;
+import com.finnc.services.SignalService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class SignalReceiverApplication {
 
-    private final SignalReceiverService signalReceiverService;
+    private final SignalService signalReceiverService;
 
-    public SignalReceiverApplication(SignalReceiverService signalReceiverService) {
+    public SignalReceiverApplication(SignalService signalReceiverService) {
         this.signalReceiverService = signalReceiverService;
     }
 

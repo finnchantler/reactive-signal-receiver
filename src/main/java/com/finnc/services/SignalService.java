@@ -3,11 +3,9 @@ package com.finnc.services;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.List;
 
 import com.finnc.models.Customer;
-import com.finnc.models.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -15,12 +13,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 @Service
-public class SignalReceiverService {
+public class SignalService {
 
     private final StorageService storageService;
 
     @Autowired
-    public SignalReceiverService(StorageService storageService) {
+    public SignalService(StorageService storageService) {
         this.storageService = storageService;
         System.out.println("signal-receiver-service initialized");
     }
