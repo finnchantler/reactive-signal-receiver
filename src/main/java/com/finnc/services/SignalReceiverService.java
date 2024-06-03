@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import com.finnc.models.Customer;
-import com.finnc.models.Order;
+import com.finnc.models.Orders;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -79,9 +79,9 @@ public class SignalReceiverService {
 
             String[] items = parts[0].substring(6).split(", ");
             Customer customer = new Customer("Finn"); // Pull from signal-cli eventually
-            Order order = new Order(customer, items, parts[1]);
+            Orders orders = new Orders(customer, items, parts[1]);
 
-            System.out.println(order.toString());
+            System.out.println(orders.toString());
 
 
         } else if (split[0].equals("status")) {

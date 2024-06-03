@@ -1,6 +1,6 @@
 package com.finnc.controller;
 
-import com.finnc.models.Order;
+import com.finnc.models.Orders;
 import com.finnc.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ public class SpringReceiverController {
     }
 
     @PostMapping("/store")
-    public ResponseEntity<String> storeOrder(@RequestBody Order order) {
-        storageService.storeOrder(order);
+    public ResponseEntity<String> storeOrder(@RequestBody Orders orders) {
+        storageService.storeOrder(orders);
         return ResponseEntity.ok("Order stored successfully");
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = storageService.getAllOrders();
+    public ResponseEntity<List<Orders>> getAllOrders() {
+        List<Orders> orders = storageService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 }

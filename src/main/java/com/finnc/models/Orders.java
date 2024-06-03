@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.Arrays;
 
 @Entity
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,9 @@ public class Order {
     @ElementCollection
     private String[] items;
 
-    public Order() {}
+    public Orders() {}
 
-    public Order(Customer customer, String[] items, String deliverTo) {
+    public Orders(Customer customer, String[] items, String deliverTo) {
         this.customer = customer;
         this.items = items;
         this.deliverTo = deliverTo;

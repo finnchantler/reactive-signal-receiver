@@ -1,6 +1,6 @@
 package com.finnc.services;
 
-import com.finnc.models.Order;
+import com.finnc.models.Orders;
 import com.finnc.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class StorageService {
         this.orderRepository = orderRepository;
     }
 
-    public void storeOrder(Order order) {
-        orderRepository.save(order);
-        System.out.println("Stored order: " + order); // Debugging line
+    public void storeOrder(Orders orders) {
+        orderRepository.save(orders);
+        System.out.println("Stored order: " + orders); // Debugging line
     }
 
-    public List<Order> getAllOrders() {
+    public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
 }
