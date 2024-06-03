@@ -3,6 +3,7 @@ package com.finnc.services;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 import com.finnc.models.Customer;
@@ -33,7 +34,7 @@ public class SignalReceiverService {
     }
 
     public Flux<String> readMockStringPublisher() {
-        return new MockStringPublisher(List.of("menu", "order pizza, cake, McPlant to what.three.words", "status", "Hello?"))
+        return new MockStringPublisher(List.of("order", "order pizza, cake, McPlant t what.three.words", "order padThai to", "order chicken to hello.three.words"))
                 .getStringFlux();
     }
 
@@ -65,29 +66,36 @@ public class SignalReceiverService {
     }
 
     private void processMessage(String message) {
-        System.out.println("parser received: " + message);
-        String[] split = message.split(" ");
+        //System.out.println("parser received: " + message);
 
-        if (split[0].equals("menu")) {
+        String[] messageArray = message.split(" ");
+
+        if (messageArray[0].equals("menu")) {
             // Get menu from API
-        } else if (split[0].equals("order")) {
+        } else if (messageArray[0].equals("order")) {
 
-            String[] parts = message.split(" to ");
-            if (parts.length != 2) {
-                // Invalid format, send a message back to the user
-            }
+            String result = processOrder(message);
+            System.out.println(result);
 
-            String[] items = parts[0].substring(6).split(", ");
-            Customer customer = new Customer("Finn"); // Pull from signal-cli eventually
-            Orders orders = new Orders(customer, items, parts[1]);
-
-            System.out.println(orders.toString());
-
-
-        } else if (split[0].equals("status")) {
+        } else if (messageArray[0].equals("status")) {
             // Calls API for shop status (online, offline, back in 5 etc)
         } else {
             // Handles non-command messaging, forwarding them to admin for reply
         }
+    }
+
+    private String processOrder(String orderString) {
+        System.out.println("processOrder received: " + orderString);
+
+        String result = "order format: 'order list, of, items to what.three.words'";
+
+        String[] orderParts = orderString.split(" to ");
+        if (orderParts.length == 2) {
+            String items = orderParts[0].substring(6);
+            String deliveringTo = orderParts[1];
+            result = items + " - " + deliveringTo;
+        }
+
+        return result;
     }
 }
