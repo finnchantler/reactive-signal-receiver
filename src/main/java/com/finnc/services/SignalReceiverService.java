@@ -98,15 +98,18 @@ public class SignalReceiverService {
         if (orderParts.length == 2) {
             String items = orderParts[0].substring(6);
             String deliveringTo = orderParts[1];
+
+            // Create a customer entry
+            Customer testCustomer = new Customer("finn");
+            storageService.storeCustomer(testCustomer);
+
             String customerName = "finn"; // get this from signal-cli eventually
 
             List<Customer> matchingCustomers = storageService.searchCustomersByName(customerName);
 
             if (!matchingCustomers.isEmpty()) {
+                // Customer name is valid
 
-                for (Customer c : matchingCustomers) {
-                    System.out.println(c);
-                }
             }
 
 
