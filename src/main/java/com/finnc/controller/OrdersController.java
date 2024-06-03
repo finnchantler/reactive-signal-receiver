@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
-public class SpringReceiverController {
+public class OrdersController {
 
     private final StorageService storageService;
 
     @Autowired
-    public SpringReceiverController(StorageService storageService) {
+    public OrdersController(StorageService storageService) {
         this.storageService = storageService;
     }
 

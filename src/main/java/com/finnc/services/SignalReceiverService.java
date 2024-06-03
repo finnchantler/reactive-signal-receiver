@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.finnc.models.Customer;
 import com.finnc.models.Orders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,7 +17,11 @@ import reactor.core.scheduler.Schedulers;
 @Service
 public class SignalReceiverService {
 
-    public SignalReceiverService() {
+    private final StorageService storageService;
+
+    @Autowired
+    public SignalReceiverService(StorageService storageService) {
+        this.storageService = storageService;
         System.out.println("signal-receiver-service initialized");
     }
 
@@ -94,6 +99,15 @@ public class SignalReceiverService {
             String items = orderParts[0].substring(6);
             String deliveringTo = orderParts[1];
             String customerName = "finn"; // get this from signal-cli eventually
+
+            List<Customer> matchingCustomers = storageService.searchCustomersByName(customerName);
+
+            if (!matchingCustomers.isEmpty()) {
+
+                for (Customer c : matchingCustomers) {
+                    System.out.println(c);
+                }
+            }
 
 
             result = items + " - " + deliveringTo;
