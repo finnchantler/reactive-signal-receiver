@@ -11,7 +11,7 @@ public class Orders {
     private Long id;
     private String deliverTo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -61,6 +61,6 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "ORDER: " + customer + " - ITEMS: " + Arrays.toString(items) + " - DELIVER TO: " + deliverTo;
+        return "ORDER ID " + getId() + " : " + getCustomer() + " - ITEMS: " + Arrays.toString(getItems()) + " - DELIVER TO: " + getDeliverTo();
     }
 }

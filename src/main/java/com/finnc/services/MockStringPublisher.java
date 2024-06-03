@@ -11,7 +11,7 @@ public class MockStringPublisher {
 
     public MockStringPublisher(List<String> strings) {
         this.stringFlux = Flux.fromIterable(strings)
-                .concatMap(string -> Flux.just(string).delayElements(Duration.ofSeconds(2)));
+                .concatMap(string -> Flux.just(string).delayElements(Duration.ofSeconds(1)));
     }
 
     public Flux<String> getStringFlux() {

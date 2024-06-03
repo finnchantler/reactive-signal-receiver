@@ -24,18 +24,18 @@ public class StorageService {
         this.customerRepository = customerRepository;
     }
 
-    public void storeOrder(Orders orders) {
+    public String storeOrder(Orders orders) {
         orderRepository.save(orders);
-        System.out.println("Stored order: " + orders); // Debugging line
+        return "Stored order: " + orders; // Debugging line
     }
 
     public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    public void storeCustomer(Customer customer) {
+    public String storeCustomer(Customer customer) {
         customerRepository.save(customer);
-        System.out.println("Stored customer: " + customer.toString());
+        return "Stored customer: " + customer;
     }
 
     public List<Customer> searchCustomersByName(String name) { return customerRepository.findByNameContaining(name); }
