@@ -1,6 +1,6 @@
 package com.finnc;
 
-import com.finnc.receiver.SignalReceiverService;
+import com.finnc.services.SignalReceiverService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.finnc.receiver;
+package com.finnc.services;
 
 import reactor.core.publisher.Flux;
 
