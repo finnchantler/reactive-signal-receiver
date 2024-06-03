@@ -93,6 +93,9 @@ public class SignalReceiverService {
         if (orderParts.length == 2) {
             String items = orderParts[0].substring(6);
             String deliveringTo = orderParts[1];
+            String customerName = "finn"; // get this from signal-cli eventually
+
+
             result = items + " - " + deliveringTo;
         }
 
