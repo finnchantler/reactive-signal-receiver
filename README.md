@@ -5,4 +5,4 @@ Java application built using Project Reactor to process messages from [signal-cl
 
 ---
 ## Stuff to do or fix
-- setup DB and spring JPA
+- Validate order items logic in SignalService doesn't reduce stock levels yet
