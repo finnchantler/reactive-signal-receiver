@@ -1,10 +1,10 @@
 package com.finnc.services;
 
 import com.finnc.models.Customer;
-import com.finnc.models.MenuItem;
+import com.finnc.models.Product;
 import com.finnc.models.Orders;
 import com.finnc.repo.CustomerRepository;
-import com.finnc.repo.MenuItemRepository;
+import com.finnc.repo.ProductRepository;
 import com.finnc.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ import java.util.List;
 public class StorageService {
 
     private final OrderRepository orderRepository;
-    private final MenuItemRepository menuItemRepository;
+    private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public StorageService(OrderRepository orderRepository, MenuItemRepository menuItemRepository, CustomerRepository customerRepository) {
+    public StorageService(OrderRepository orderRepository, ProductRepository productRepository, CustomerRepository customerRepository) {
         this.orderRepository = orderRepository;
-        this.menuItemRepository = menuItemRepository;
+        this.productRepository = productRepository;
         this.customerRepository = customerRepository;
     }
 
@@ -41,11 +41,11 @@ public class StorageService {
 
     public List<Customer> searchCustomersByName(String name) { return customerRepository.findByNameContaining(name); }
 
-    public String createMenuItem(MenuItem menuItem) {
-        menuItemRepository.save(menuItem);
-        return "Stored menu item: " + menuItem;
+    public String createMenuItem(Product product) {
+        productRepository.save(product);
+        return "Stored menu item: " + product;
     }
 
-    public List<MenuItem> getAllMenuItems() { return menuItemRepository.findAll(); }
+    public List<Product> getAllMenuItems() { return productRepository.findAll(); }
 }
 

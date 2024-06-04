@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import com.finnc.models.Customer;
-import com.finnc.models.MenuItem;
+import com.finnc.models.Product;
 import com.finnc.models.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -39,7 +39,7 @@ public class SignalService {
     }
 
     public Flux<String> readMockStringPublisher() {
-        return new MockStringPublisher(List.of("order", "order pizza, cake, McPlant t what.three.words", "order padThai to", "order chicken to hello.three.words"))
+        return new MockStringPublisher(List.of("order", "order pizza, cake, McPlant t what.three.words", "order padThai to", "order Cali to hello.three.words"))
                 .getStringFlux();
     }
 
@@ -109,12 +109,14 @@ public class SignalService {
 
             if (!matchingCustomers.isEmpty()) {
                 // Customer name is valid
-                List<MenuItem> menuItems = storageService.getAllMenuItems();
+
+                List<Product> products = storageService.getAllMenuItems();
+                /*
                 int validItems = 0;
                 for (String orderItem : orderItems) {
                     // Loop through items in order, check against menuItems, and check stock
-                    for (MenuItem menuItem : menuItems) {
-                        if (menuItem.getName().equals(orderItem) && menuItem.getStock() > 0) {
+                    for (Product product : products) {
+                        if (product.getName().equals(orderItem) && product.getStock() > 0) {
                             validItems++;
                         }
                     }
@@ -126,6 +128,11 @@ public class SignalService {
                 } else {
                     result = "one or more items were not found or were out of stock";
                 }
+
+                 */
+
+                Orders order = new Orders(matchingCustomers.getFirst(), orderItems, deliveringTo);
+                result = storageService.storeOrder(order);
             }
         }
 

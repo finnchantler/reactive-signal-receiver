@@ -1,6 +1,6 @@
 package com.finnc.controller;
 
-import com.finnc.models.MenuItem;
+import com.finnc.models.Product;
 import com.finnc.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,24 +9,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/items")
-public class MenuItemsController {
+public class ProductsController {
 
     private final StorageService storageService;
 
     @Autowired
-    public MenuItemsController(StorageService storageService) {
+    public ProductsController(StorageService storageService) {
         this.storageService = storageService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createMenuItem(@RequestBody MenuItem menuItem) {
-        storageService.createMenuItem(menuItem);
+    public ResponseEntity<String> createMenuItem(@RequestBody Product product) {
+        storageService.createMenuItem(product);
         return ResponseEntity.ok("Menu item added successfully");
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<MenuItem>> getAllMenuItems() {
-        List<MenuItem> menuItems = storageService.getAllMenuItems();
-        return ResponseEntity.ok(menuItems);
+    public ResponseEntity<List<Product>> getAllMenuItems() {
+        List<Product> products = storageService.getAllMenuItems();
+        return ResponseEntity.ok(products);
     }
 }

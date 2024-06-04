@@ -1,9 +1,9 @@
 package com.finnc.repo;
 
-import com.finnc.models.MenuItem;
+import com.finnc.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 }

@@ -3,7 +3,7 @@ package com.finnc.models;
 import jakarta.persistence.*;
 
 @Entity
-public class MenuItem {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,9 @@ public class MenuItem {
     private int price;
     private int stock;
 
-    public MenuItem() {}
+    public Product() {}
 
-    public MenuItem(String name, String description, int price, int stock) {
+    public Product(String name, String description, int price, int stock) {
         this.name = name;
         this.description = description;
         this.price = price;
