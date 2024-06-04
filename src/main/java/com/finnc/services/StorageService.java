@@ -1,6 +1,7 @@
 package com.finnc.services;
 
 import com.finnc.models.Customer;
+import com.finnc.models.MenuItem;
 import com.finnc.models.Orders;
 import com.finnc.repo.CustomerRepository;
 import com.finnc.repo.MenuItemRepository;
@@ -26,7 +27,7 @@ public class StorageService {
 
     public String storeOrder(Orders orders) {
         orderRepository.save(orders);
-        return "Stored order: " + orders; // Debugging line
+        return "Stored order: " + orders;
     }
 
     public List<Orders> getAllOrders() {
@@ -39,5 +40,12 @@ public class StorageService {
     }
 
     public List<Customer> searchCustomersByName(String name) { return customerRepository.findByNameContaining(name); }
+
+    public String createMenuItem(MenuItem menuItem) {
+        menuItemRepository.save(menuItem);
+        return "Stored menu item: " + menuItem;
+    }
+
+    public List<MenuItem> getAllMenuItems() { return menuItemRepository.findAll(); }
 }
 

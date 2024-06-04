@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import com.finnc.models.Customer;
+import com.finnc.models.MenuItem;
 import com.finnc.models.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -95,7 +96,7 @@ public class SignalService {
 
         String[] orderParts = orderString.split(" to ");
         if (orderParts.length == 2) {
-            String[] items = orderParts[0].substring(6).split(", ");
+            String[] orderItems = orderParts[0].substring(6).split(", ");
             String deliveringTo = orderParts[1];
 
             // Create a customer entry
@@ -108,9 +109,23 @@ public class SignalService {
 
             if (!matchingCustomers.isEmpty()) {
                 // Customer name is valid
-                // Still need to validate items and check stock
-                Orders order = new Orders(matchingCustomers.get(0), items, deliveringTo);
-                result = storageService.storeOrder(order);
+                List<MenuItem> menuItems = storageService.getAllMenuItems();
+                int validItems = 0;
+                for (String orderItem : orderItems) {
+                    // Loop through items in order, check against menuItems, and check stock
+                    for (MenuItem menuItem : menuItems) {
+                        if (menuItem.getName().equals(orderItem) && menuItem.getStock() > 0) {
+                            validItems++;
+                        }
+                    }
+                }
+
+                if (validItems == orderItems.length) {
+                    Orders order = new Orders(matchingCustomers.getFirst(), orderItems, deliveringTo);
+                    result = storageService.storeOrder(order);
+                } else {
+                    result = "one or more items were not found or were out of stock";
+                }
             }
         }
 
